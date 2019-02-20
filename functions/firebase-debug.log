@@ -1,0 +1,53 @@
+[debug] [2019-02-20T18:15:16.799Z] ----------------------------------------------------------------------
+[debug] [2019-02-20T18:15:16.808Z] Command:       /usr/bin/node /mnt/c/Users/Kodowanie/AppData/Roaming/npm/node_modules/firebase-tools/bin/firebase serve --only functions,hosting
+[debug] [2019-02-20T18:15:16.810Z] CLI Version:   4.0.3
+[debug] [2019-02-20T18:15:16.810Z] Platform:      linux
+[debug] [2019-02-20T18:15:16.810Z] Node Version:  v10.15.0
+[debug] [2019-02-20T18:15:18.269Z] Time:          Wed Feb 20 2019 19:15:16 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:18.269Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-20T18:15:18.307Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-20T18:15:18.308Z] > authorizing via signed-in user
+[debug] [2019-02-20T18:15:18.315Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-20T18:15:18.316Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token:
+   '1/9wCt1l6bpNgyBCIDeYE_gM7ghupSiFXCr8CYDb1_FT9WA8UqCHVQy8BgCXm1QoVp',
+  client_id:
+   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope:
+   'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Feb 20 2019 19:15:18 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:18.773Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-20T18:15:18.796Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/online-exchange-app  
+  
+ Wed Feb 20 2019 19:15:18 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:19.709Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-20T18:15:19.712Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/online-exchange-app/tokens  
+  
+ Wed Feb 20 2019 19:15:19 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:20.358Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-20T18:15:20.360Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/online-exchange-app  
+  
+ Wed Feb 20 2019 19:15:20 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:21.490Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/mnt/c/Users/Kodowanie/Projects/work/online_currency_exchange_app'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-02-20T18:15:24.481Z] Fetching environment
+[debug] [2019-02-20T18:15:24.490Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/373756675850:getServerAppConfig  
+  
+ Wed Feb 20 2019 19:15:24 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:24.492Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/373756675850/clients/_:getWebAppConfig  
+  
+ Wed Feb 20 2019 19:15:24 GMT+0100 (GMT+01:00)
+[debug] [2019-02-20T18:15:25.020Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-20T18:15:25.021Z] Starting @google-cloud/functions-emulator
+[debug] [2019-02-20T18:15:25.117Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: front/build
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2019-02-20T18:15:31.250Z] Parsing function triggers
+[info] ✔  functions: api: http://localhost:5001/online-exchange-app/us-central1/api
