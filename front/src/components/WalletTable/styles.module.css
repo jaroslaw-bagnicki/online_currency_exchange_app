@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actionCell {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.accountBalance {
+  padding: 15px 7px;
+}

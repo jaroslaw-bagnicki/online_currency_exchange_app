@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: row; 
+  align-items: baseline;
+}
+
+.pubDate {
+  font-size: .67em;
+}
+
+.actionCell {
+  padding-top: 0;
+  padding-bottom: 0;
+}
