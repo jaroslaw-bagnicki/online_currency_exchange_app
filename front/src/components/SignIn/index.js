@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
+import styles from './styles.module.css';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {signIn } from '../../store/actions/authActions';
 
-export class SignIn extends Component {
+class SignIn extends Component {
   state = {
     email: '',
     password: ''
+  }
+
+  static propTypes = {
+    isSignIn: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    signIn: PropTypes.func.isRequired
+  };
+
+  clearFix = {
+    clear: 'both'
   }
 
   handleChange = (e) => {
@@ -14,10 +29,12 @@ export class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handleSubmit()');
+    this.props.signIn(this.state);
   }
 
   render() {
+    const { isSignIn, error } = this.props;
+    if (isSignIn) return (<Redirect to="/" />);
     return (
       <div className="container">
         <div className="row">
@@ -32,9 +49,10 @@ export class SignIn extends Component {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" value={this.state.password} onChange={this.handleChange} />
               </div>
-              <div className="input-field">
+              <div>
                 <button type="submit" className="btn grey right">Sign in</button>
               </div>
+              <div className={styles.alert}>{ error && <p className="red-text center">{error}</p>}</div>
             </form>
           </div>
         </div>
@@ -42,3 +60,14 @@ export class SignIn extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  isSignIn: !(state.fb.auth.isEmpty),
+  error: state.auth.error
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  signIn: (credentials) => dispatch(signIn(credentials))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

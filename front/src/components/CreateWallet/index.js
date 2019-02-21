@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 export class CreateWallet extends Component {
   state = {
     pln: '',
     isForeignDeposit: false
   }
+
+  static propTypes = {
+    isSignIn: PropTypes.bool.isRequired
+  };
 
   currencies = [
     { symbol: 'USD', unit: 1 },
@@ -55,6 +62,8 @@ export class CreateWallet extends Component {
   }
 
   render() {
+    const { isSignIn } = this.props;
+    if (!isSignIn) return (<Redirect to="/sign-in" />);
     return (
       <div className="container">
         <div className="row">
@@ -77,3 +86,9 @@ export class CreateWallet extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  isSignIn: !(state.fb.auth.isEmpty)
+});
+
+export default connect(mapStateToProps)(CreateWallet);

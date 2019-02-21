@@ -1,11 +1,11 @@
-export { Navbar } from './Navbar';
-export { SignedInLinks } from './SignedInLinks';
+export { default as Navbar } from './Navbar';
+export { default as SignedInLinks } from './SignedInLinks';
 export { SignedOutLinks } from './SignedOutLinks';
-export { Register } from './Register';
-export { SignIn } from './SignIn';
+export { default as Register } from './Register';
+export { default as SignIn } from './SignIn';
 export { default as Dashboard } from './Dashboard';
 export { CurrenciesTable } from './CurrenciesTable';
 export { WalletTable } from './WalletTable';
-export { CreateWallet } from './CreateWallet';
-export { BuyCurrency } from './BuyCurrency';
-export { SellCurrency } from './SellCurrency';
+export { default as CreateWallet } from './CreateWallet';
+export { default as BuyCurrency } from './BuyCurrency';
+export { default as SellCurrency } from './SellCurrency';

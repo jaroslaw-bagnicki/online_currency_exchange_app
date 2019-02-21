@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { 
   Navbar,
   Dashboard,
@@ -21,7 +21,9 @@ export default class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/sign-in" component={SignIn} />
             <Route exact path="/create-wallet" component={CreateWallet} />
+            <Redirect exact from='/buy' to='/'/>
             <Route exact path="/buy/:symbol" component={BuyCurrency} />
+            <Redirect exact from='/sell' to='/'/>
             <Route exact path="/sell/:symbol" component={SellCurrency} />
           </Switch>
         </div>

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 export class Register extends Component {
   state = {
@@ -8,6 +11,11 @@ export class Register extends Component {
     email: '',
     password: ''
   }
+
+  static propTypes = {
+    isSignIn: PropTypes.bool.isRequired,
+    error: PropTypes.string
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -21,6 +29,8 @@ export class Register extends Component {
   }
 
   render() {
+    const { isSignIn } = this.props;
+    if (isSignIn) return (<Redirect to="/" />);
     return (
       <div className="container">
         <div className="row">
@@ -57,3 +67,9 @@ export class Register extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  isSignIn: !(state.fb.auth.isEmpty)
+});
+
+export default connect(mapStateToProps)(Register);
