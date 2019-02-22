@@ -1,7 +1,3 @@
 const functions = require('firebase-functions');
-const express = require('express');
-
-const  app = express();
-app.get('/', (req, res) => res.status(200).send('Hello World from backend.'));
-
+const app = require('./api');
 exports.api = functions.https.onRequest(app);
