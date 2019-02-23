@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 
 export const WalletTable = ({ wallet, rates }) => {
-  const walletItems = wallet.items.map(item => Object.assign(item, rates.find(rate => rate.Code === item.code)));
+  const walletItems = wallet.items.map(item => Object.assign(item, rates.find(rate => rate.code === item.code)));
   return (
-    <div className="section">
-      <header>
-        <h5>My Wallet</h5>
-      </header>
-      { (walletItems.length === 0) ? <h6>Currenty You don&apos;t have foreign currency.</h6> : (
+    <>    
+      { !wallet.isLoaded ? <h5 className={styles.loader}><i className="fas fa-spinner fa-spin"></i></h5> : (walletItems.length === 0) ? <h6>Currenty You don&apos;t have foreign currency.</h6> : (
+        <>
         <table>
           <thead>
             <tr>
@@ -24,37 +22,39 @@ export const WalletTable = ({ wallet, rates }) => {
           <tbody>
             {walletItems.map((item, index) => (
               <tr key={index}>
-                <td>{item.Code}</td>
-                <td>{item.PurchasePrice}</td>
+                <td>{item.code}</td>
+                <td>{item.purchasePrice}</td>
                 <td>{item.amount}</td>
-                <td>{(item.PurchasePrice * item.amount).toFixed(2)}</td>
+                <td>{(item.purchasePrice * item.amount).toFixed(2)}</td>
                 <td className={styles.actionCell}>
-                  <Link className="btn-small grey" to={`/sell/${item.Code}`}>Sell</Link>
+                  <Link className="btn-small grey" to={`/sell/${item.code}`}>Sell</Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className={styles.accountBalance}>Available PLN: {wallet.balance.toFixed(2)} zł</div></>
       )}
-      <div className={styles.accountBalance}>Available PLN: {wallet.balance.toFixed(2)} zł</div>
-    </div>
+    </>
   );
 };
 
 WalletTable.propTypes = {
   wallet: PropTypes.shape({
-    balance: PropTypes.number.isRequired,
+    isLoaded: PropTypes.bool,
+    isProceeding: PropTypes.bool,
+    balance: PropTypes.number,
     items: PropTypes.arrayOf(PropTypes.shape({
       code: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired
-    })).isRequired
-  }).isRequired,
+    }))
+  }),
   rates: PropTypes.arrayOf(PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Code: PropTypes.string.isRequired,
-    Unit: PropTypes.number.isRequired,
-    PurchasePrice: PropTypes.number.isRequired,
-    SellPrice: PropTypes.number.isRequired,
-    AveragePrice: PropTypes.number.isRequired
+    name: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
+    unit: PropTypes.number.isRequired,
+    purchasePrice: PropTypes.number.isRequired,
+    sellPrice: PropTypes.number.isRequired,
+    averagePrice: PropTypes.number.isRequired
   })).isRequired
 };

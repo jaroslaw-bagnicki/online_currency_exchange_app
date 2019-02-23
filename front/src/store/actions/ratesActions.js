@@ -1,6 +1,8 @@
+import camelcaseKeys from 'camelcase-keys';
+
 export const receivedRates = (data) => ({
   type: 'RECEIVED_RATES',
-  rates: JSON.parse(data)
+  rates: camelcaseKeys(JSON.parse(data), {deep: true})
 });
 
 export const ratesServiceError = () => ({

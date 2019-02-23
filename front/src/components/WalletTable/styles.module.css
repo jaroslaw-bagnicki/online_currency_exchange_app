@@ -13,3 +13,7 @@
 .accountBalance {
   padding: 15px 7px;
 }
+
+.loader {
+  text-align: center;
+}

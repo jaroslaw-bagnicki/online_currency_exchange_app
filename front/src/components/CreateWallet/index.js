@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {createWallet, clearError } from '../../store/actions/walletActions';
 
 export class CreateWallet extends Component {
   state = {
@@ -10,17 +12,17 @@ export class CreateWallet extends Component {
   }
 
   static propTypes = {
-    isSignIn: PropTypes.bool.isRequired
+    isSignIn: PropTypes.bool.isRequired,
+    hasWallet: PropTypes.bool,
+    isProceeding: PropTypes.bool,
+    error: PropTypes.string,
+    createWallet: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired,
+    currencies: PropTypes.arrayOf(PropTypes.shape({
+      code: PropTypes.string,
+      unit: PropTypes.number
+    }))
   };
-
-  currencies = [
-    { symbol: 'USD', unit: 1 },
-    { symbol: 'EUR', unit: 1 },
-    { symbol: 'CHF', unit: 1 },
-    { symbol: 'RUB', unit: 100 },
-    { symbol: 'CZK', unit: 100 },
-    { symbol: 'GBP', unit: 1 }
-  ];
 
   handleChange = (e) => {
     this.setState({
@@ -30,12 +32,17 @@ export class CreateWallet extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handleSubmit()', this.state);
+    const { isForeignDeposit, pln, ...currency } = this.state;
+    const balance = Number.parseFloat(pln);
+    const items = Object.entries(currency)
+      .filter(item => item[1] !== '')
+      .map(item => ({code: item[0], amount: Number.parseFloat(item[1])}));
+    this.props.createWallet({ balance, items });
   }
 
   toggleForeignDeposite = () => {
-    const foreignCurrenciesState = this.currencies.reduce((prev, curr) => {
-      prev[curr.symbol.toLowerCase()] =  '';
+    const foreignCurrenciesState = this.props.currencies.reduce((prev, curr) => {
+      prev[curr.code] =  '';
       return prev;
     }, {});
     this.setState({
@@ -47,13 +54,13 @@ export class CreateWallet extends Component {
   renderForeignCurrenciesFields() {
     return (
       <>
-        {this.currencies.map((curr, index) => (
+        {this.props.currencies.map((curr, index) => (
           <div key={index} className="input-field">
-            <label htmlFor={curr.symbol.toLowerCase()}>{curr.symbol} deposit</label>
+            <label htmlFor={curr.code}>{curr.code} deposit</label>
             <input 
               type="number" 
-              id={curr.symbol.toLowerCase()} 
-              value={this.state[curr.symbol.toLowerCase()]} 
+              id={curr.code} 
+              value={this.state[curr.code]} 
               onChange={this.handleChange} />
           </div>
         ))}
@@ -62,8 +69,9 @@ export class CreateWallet extends Component {
   }
 
   render() {
-    const { isSignIn } = this.props;
+    const { isSignIn, hasWallet, isProceeding, error } = this.props;
     if (!isSignIn) return (<Redirect to="/sign-in" />);
+    if (hasWallet) return (<Redirect to="/" />);
     return (
       <div className="container">
         <div className="row">
@@ -77,7 +85,10 @@ export class CreateWallet extends Component {
               { this.state.isForeignDeposit && this.renderForeignCurrenciesFields() }
               <div>
                 { !this.state.isForeignDeposit &&  (<button className="btn grey" onClick={this.toggleForeignDeposite}>Add foreign deposit</button>)}
-                <button type="submit" className="btn grey right">Create wallet</button>
+                <button type="submit" className="btn grey right" disabled={isProceeding}>
+                  <span className={styles.buttonContent}>Create Wallet { isProceeding && <i className="fas fa-spinner fa-spin"></i> }</span>
+                </button>
+                <div className={styles.alert}>{ error && <p className="red-text center">{error}</p>}</div>
               </div>
             </form>
           </div>
@@ -88,7 +99,16 @@ export class CreateWallet extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isSignIn: !(state.fb.auth.isEmpty)
+  isSignIn: !(state.fb.auth.isEmpty),
+  hasWallet: state.fb.profile.hasWallet,
+  isProceeding: state.wallet.isProceeding,
+  error: state.wallet.error,
+  currencies: state.rates.items
 });
 
-export default connect(mapStateToProps)(CreateWallet);
+const mapDispatchToProps = (dispatch) => ({
+  createWallet: (initDeposite) => dispatch(createWallet(initDeposite)),
+  clearError: () => dispatch(clearError())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateWallet);

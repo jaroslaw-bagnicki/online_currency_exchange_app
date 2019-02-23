@@ -1,6 +1,6 @@
 const initState = {
-  PublicationDate: '',
-  Items: [],
+  publicationDate: '',
+  items: [],
   error: false
 };
 

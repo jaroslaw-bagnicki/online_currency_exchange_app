@@ -20,11 +20,11 @@ export const CurrenciesTable = ({pubDate, rates}) => (
       <tbody>
         { rates.map((rate, index) => (
           <tr key={index}>
-            <td>{rate.Code}</td>
-            <td>{rate.Unit}</td>
-            <td>{rate.SellPrice}</td>
+            <td>{rate.code}</td>
+            <td>{rate.unit}</td>
+            <td>{rate.sellPrice}</td>
             <td className={styles.actionCell}>
-              <Link className="btn-small grey" to={`/buy/${rate.Code}`}>Buy</Link>
+              <Link className="btn-small grey" to={`/buy/${rate.code}`}>Buy</Link>
             </td>
           </tr>
         )) }
@@ -36,11 +36,11 @@ export const CurrenciesTable = ({pubDate, rates}) => (
 CurrenciesTable.propTypes = {
   pubDate: PropTypes.string.isRequired,
   rates: PropTypes.arrayOf(PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Code: PropTypes.string.isRequired,
-    Unit: PropTypes.number.isRequired,
-    PurchasePrice: PropTypes.number.isRequired,
-    SellPrice: PropTypes.number.isRequired,
-    AveragePrice: PropTypes.number.isRequired
+    name: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
+    unit: PropTypes.number.isRequired,
+    purchasePrice: PropTypes.number.isRequired,
+    sellPrice: PropTypes.number.isRequired,
+    averagePrice: PropTypes.number.isRequired
   })).isRequired
 };
