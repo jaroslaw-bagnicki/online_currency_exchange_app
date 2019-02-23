@@ -4,7 +4,9 @@ export const signIn = (credentials) => (dispatch, getState, { getFirebase }) => 
   fb.auth().signInWithEmailAndPassword(
     credentials.email,
     credentials.password
-  ).then(() => dispatch({ type: 'SIGNIN_SUCCESS' }))
+  ).then(() => {
+    dispatch({ type: 'SIGNIN_SUCCESS' });
+  })
     .catch(err => dispatch({ type: 'SIGNIN_ERROR', err }));
 };
 

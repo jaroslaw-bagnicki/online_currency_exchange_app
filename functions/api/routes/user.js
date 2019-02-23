@@ -5,8 +5,6 @@ const userController = require('../contollers/user');
 
 router.post('/register', userController.registerNewUser);
 
-router.get('/profile', checkAuth, userController.getProfile);
-
 router.patch('/profile', (req, res, next) => {
   // TODO Edit user profile
   res.sendStatus(501);

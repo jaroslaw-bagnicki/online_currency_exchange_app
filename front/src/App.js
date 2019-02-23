@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { 
   Navbar,
   Dashboard,
+  Profile,
   Register,
   SignIn,
   CreateWallet,
@@ -18,6 +19,7 @@ export default class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/sign-in" component={SignIn} />
             <Route exact path="/create-wallet" component={CreateWallet} />

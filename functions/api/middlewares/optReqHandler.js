@@ -1,3 +1,5 @@
+const config = require('../config');
+
 module.exports = (req, res, next) => {
   res.set(config.RES_HEADERS);
   if (req.method === 'OPTIONS') {

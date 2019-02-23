@@ -1,6 +1,9 @@
 const initState = {
+  profile: {},
   isProceeding: false,
-  error: null
+  error: null,
+  fetchProfileIsProceeding: true,
+  fetchProfileError: null
 };
 
 export const authReducer = (state = initState, action) => {
