@@ -1,9 +1,8 @@
 // USER
 const router = require('express').Router();
+const userController = require('../contollers/user');
 
-router.post('/register', (req, res, next) => {
-  res.status(201).send('Create new user...')
-});
+router.post('/register', userController.registerNewUser);
 
 router.get('/account', (req, res, next) => {
   res.status(200).send('Get user data...')

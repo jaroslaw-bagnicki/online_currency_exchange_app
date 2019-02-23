@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {signIn } from '../../store/actions/authActions';
+import { signIn, clearError } from '../../store/actions/authActions';
 
 class SignIn extends Component {
   state = {
@@ -13,13 +13,11 @@ class SignIn extends Component {
 
   static propTypes = {
     isSignIn: PropTypes.bool.isRequired,
-    error: PropTypes.string,
-    signIn: PropTypes.func.isRequired
+    isProceeding: PropTypes.bool.isRequired,
+    signIn: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired,
+    error: PropTypes.string
   };
-
-  clearFix = {
-    clear: 'both'
-  }
 
   handleChange = (e) => {
     this.setState({
@@ -33,7 +31,7 @@ class SignIn extends Component {
   }
 
   render() {
-    const { isSignIn, error } = this.props;
+    const { isSignIn, isProceeding, error } = this.props;
     if (isSignIn) return (<Redirect to="/" />);
     return (
       <div className="container">
@@ -50,7 +48,9 @@ class SignIn extends Component {
                 <input type="password" id="password" value={this.state.password} onChange={this.handleChange} />
               </div>
               <div>
-                <button type="submit" className="btn grey right">Sign in</button>
+                <button type="submit" className="btn grey right" disabled={isProceeding}>
+                  <span className={styles.buttonContent}>Sign In { isProceeding && <i className="fas fa-spinner fa-spin"></i> }</span>
+                </button>
               </div>
               <div className={styles.alert}>{ error && <p className="red-text center">{error}</p>}</div>
             </form>
@@ -59,15 +59,21 @@ class SignIn extends Component {
       </div>
     );
   }
+
+  componentWillUnmount() {
+    this.props.clearError();
+  }
 }
 
 const mapStateToProps = (state) => ({
   isSignIn: !(state.fb.auth.isEmpty),
+  isProceeding: state.auth.isProceeding,
   error: state.auth.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  signIn: (credentials) => dispatch(signIn(credentials))
+  signIn: (credentials) => dispatch(signIn(credentials)),
+  clearError: () => dispatch(clearError())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

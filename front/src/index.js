@@ -2,16 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './styles.css';
-import { RATES_WS_URL, FB_PROJECT_CONFIG } from './config';
+import { RATES_WS_URL, API_URL, FB_PROJECT_CONFIG } from './config';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { rootReducer } from './store/reducers';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { receivedRates, ratesServiceError } from './store/actions/ratesActions';
+import bareAxios from 'axios';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import { receivedRates, ratesServiceError } from './store/actions/ratesActions';
+
+// Init Axios instance
+const axios = bareAxios.create({
+  baseURL: API_URL
+});
 
 // Init Firebase app with auth service
 export const fbAppConfig = firebase.initializeApp(FB_PROJECT_CONFIG);
@@ -19,7 +25,7 @@ export const fbAppConfig = firebase.initializeApp(FB_PROJECT_CONFIG);
 // Init Redux Store with thunk middleware
 const store = createStore(rootReducer, 
   compose(
-    applyMiddleware(thunk.withExtraArgument({ getFirebase })), 
+    applyMiddleware(thunk.withExtraArgument({ axios, getFirebase })), 
     reactReduxFirebase(fbAppConfig, { attachAuthIsReady: true, firebaseStateName: 'fb' }))
 );
 

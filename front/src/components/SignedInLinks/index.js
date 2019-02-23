@@ -7,8 +7,9 @@ import { signOut } from '../../store/actions/authActions';
 
 const SignedInLinks = ({ signOut }) => (
   <ul className="right">
+    <li><NavLink to='/'>Dashboard</NavLink></li>
     <li className={styles.userName}>Logged in as John Doe</li>
-    <li><a onClick={signOut}>Sign Out</a></li>
+    <li><a href="#!" onClick={signOut}>Sign Out</a></li>
   </ul>
 );
 

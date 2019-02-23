@@ -1,4 +1,5 @@
 export const signIn = (credentials) => (dispatch, getState, { getFirebase }) => {
+  dispatch({type: 'SIGNIN_PROCEEDING'});
   const fb = getFirebase();
   fb.auth().signInWithEmailAndPassword(
     credentials.email,
@@ -13,3 +14,18 @@ export const signOut = () => (dispatch, getState, { getFirebase }) => {
     .then(() => dispatch({ type: 'SIGNOUT_SUCCESS' }))
     .catch(err => dispatch({ type: 'SIGNOUT_ERROR', err }));
 };
+
+export const register = (newUserData) => (dispatch, getState, { axios }) => {
+  dispatch({type: 'REGISTER_PROCEEDING'});
+  axios.post('user/register', newUserData)
+    .then(() => {
+      dispatch({ type: 'REGISTER_SUCCESS' });
+      const { email, password } = newUserData;
+      dispatch(signIn({email, password}));
+    })
+    .catch(err => dispatch({ type: 'REGISTER_ERROR', err: err.response.data }));
+};
+
+export const clearError = () => ({
+  type: 'CLEAR_AUTH_ERROR'
+});

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {register, clearError } from '../../store/actions/authActions';
 
 export class Register extends Component {
   state = {
@@ -14,6 +16,9 @@ export class Register extends Component {
 
   static propTypes = {
     isSignIn: PropTypes.bool.isRequired,
+    isProceeding: PropTypes.bool.isRequired,
+    register: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired,
     error: PropTypes.string
   };
 
@@ -25,11 +30,11 @@ export class Register extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handleSubmit()');
+    this.props.register(this.state);
   }
 
   render() {
-    const { isSignIn } = this.props;
+    const { isSignIn, isProceeding, error } = this.props;
     if (isSignIn) return (<Redirect to="/" />);
     return (
       <div className="container">
@@ -57,19 +62,31 @@ export class Register extends Component {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" value={this.state.password} onChange={this.handleChange} />
               </div>
-              <div className="input-field">
-                <button type="submit" className="btn grey right">Register</button>
-              </div>
+              <button type="submit" className="btn grey right" disabled={isProceeding}>
+                <span className={styles.buttonContent}>Register { isProceeding && <i className="fas fa-spinner fa-spin"></i> }</span>
+              </button>
+              <div className={styles.alert}>{ error && <p className="red-text center">{error}</p>}</div>
             </form>
           </div>
         </div>
       </div>
     );
   }
+
+  componentWillUnmount() {
+    this.props.clearError();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  isSignIn: !(state.fb.auth.isEmpty)
+  isSignIn: !(state.fb.auth.isEmpty),
+  isProceeding: state.auth.isProceeding,
+  error: state.auth.error
 });
 
-export default connect(mapStateToProps)(Register);
+const mapDispatchToProps = (dispatch) => ({
+  register: (newUserData) => dispatch(register(newUserData)),
+  clearError: () => dispatch(clearError())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
