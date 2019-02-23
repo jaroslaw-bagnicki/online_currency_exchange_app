@@ -1,23 +1,18 @@
 const config = require('./config');
 const express = require('express');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
+const optReqHandler = require('./middlewares/optReqHandler');
 const userRoutes = require('./routes/user');
 const ordersRoutes = require('./routes/orders');
 
 const app = express();
 
+app.use(helmet());
+app.use(optReqHandler);
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.set(config.RES_HEADERS);
-  if (req.method === 'OPTIONS') {
-    res.set(config.OPT_RES_HEADERS);
-    return res.sendStatus(200);
-  }
-  next();
-})
-
-app.get('/', (req, res) => res.status(200).send('Hello World from backend.'));
+app.get('/', (req, res) => res.status(200).send('Hello World fromfire backend.'));
 app.use('/user', userRoutes);
 app.use('/orders', ordersRoutes);
 

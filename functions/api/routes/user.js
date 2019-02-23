@@ -1,15 +1,15 @@
 // USER
+const checkAuth = require('../middlewares/checkAuth');
 const router = require('express').Router();
 const userController = require('../contollers/user');
 
 router.post('/register', userController.registerNewUser);
 
-router.get('/account', (req, res, next) => {
-  res.status(200).send('Get user data...')
-});
+router.get('/profile', checkAuth, userController.getProfile);
 
-router.patch('/account', (req, res, next) => {
-  res.status(200).send('Edit user data.')
+router.patch('/profile', (req, res, next) => {
+  // TODO Edit user profile
+  res.sendStatus(501);
 });
 
 router.get('/wallet', (req, res, next) => {
