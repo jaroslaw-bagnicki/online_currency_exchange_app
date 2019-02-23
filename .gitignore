@@ -2,6 +2,3 @@ node_modules/
 functions/node_modules/
 functions/firebase-debug.log
 functions/npm-debug.log
-
-# Firebase Admin SDK credential key
-online-exchange-app-f2a6fd590c22.json
