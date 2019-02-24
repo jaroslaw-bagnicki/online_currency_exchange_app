@@ -39,7 +39,7 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    this.props.getWallet();
+    if (this.props.isSignIn) this.props.getWallet();
   }
 
   render() {
