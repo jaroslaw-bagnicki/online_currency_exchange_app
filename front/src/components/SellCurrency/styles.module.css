@@ -1,0 +1,14 @@
+.alert {
+  clear: both;
+  padding: 1px 25px;
+}
+
+.buttonContent {
+  display: inline-flex;
+  align-items: center;
+}
+
+.buttonContent i {
+  margin-left: .5em;
+  font-size: 14px;
+}

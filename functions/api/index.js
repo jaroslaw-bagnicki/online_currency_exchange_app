@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const optReqHandler = require('./middlewares/optReqHandler');
 const userRoutes = require('./routes/user');
 const ordersRoutes = require('./routes/orders');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.status(200).send('Hello World fromfire backend.'));
 app.use('/user', userRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/admin', adminRoutes);
 
 app.use((req, res, next) => {
   const error = new Error('Not found.');

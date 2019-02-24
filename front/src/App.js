@@ -24,9 +24,9 @@ export default class App extends Component {
             <Route exact path="/sign-in" component={SignIn} />
             <Route exact path="/create-wallet" component={CreateWallet} />
             <Redirect exact from='/buy' to='/'/>
-            <Route exact path="/buy/:symbol" component={BuyCurrency} />
+            <Route exact path="/buy/:code" component={BuyCurrency} />
             <Redirect exact from='/sell' to='/'/>
-            <Route exact path="/sell/:symbol" component={SellCurrency} />
+            <Route exact path="/sell/:code" component={SellCurrency} />
           </Switch>
         </div>
       </BrowserRouter>
