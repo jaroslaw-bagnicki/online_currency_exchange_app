@@ -1,4 +1,4 @@
-export const RATES_WS_URL = 'wss://webtask.future-processing.com:8068/ws/currencies';
+export const RATES_WS_URL = 'ws://webtask.future-processing.com:8068/ws/currencies';
 
 export const FB_PROJECT_CONFIG = {
   apiKey: 'AIzaSyAavXuyFNA5tP4O3gWs4Bq29PNRPQUqYQ8',
